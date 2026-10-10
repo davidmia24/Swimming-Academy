@@ -20,13 +20,31 @@ class Nivel(SQLModel, table=True):
     nombre: str
 
 
-class Acudiente(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
+class AcudienteBase(SQLModel):
     nombre: str
     documento: str = Field(unique=True, index=True)
     telefono: str
     email: str | None = None
     parentesco: str
+
+
+class Acudiente(AcudienteBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+
+
+class AcudienteCreate(AcudienteBase):
+    pass
+
+
+class AcudientePublic(AcudienteBase):
+    id: int
+
+
+class AcudienteUpdate(SQLModel):
+    nombre: str | None = None
+    telefono: str | None = None
+    email: str | None = None
+    parentesco: str | None = None
 
 
 class Instructor(SQLModel, table=True):
